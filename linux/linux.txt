@@ -4,3 +4,9 @@
 2. to see which ports are in used:
 	sudo netstat -tuln
 
+3. to format a usb
+	3.1. see mounted devices and their mountpoins: lsblik
+	3.2. unmount the device: sudo umount <dev or mountpoint>
+	3.3. format it by any type you want(right now i prefer F32): sudo mkfs.vfat -F32 -I <dev>
+	3.3. optionally you could write all of the bytes in usb by zero using this command: sudo dd if=/dev/zero of=/dev/<usb> bs=<size-of-usb> status=progress
+
