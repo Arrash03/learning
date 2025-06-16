@@ -1,0 +1,6 @@
+branch
+	deleting a branch: git branch -d <name>
+	deleting a branch in remote: git push <remote> --delete <name>
+	
+	setting default branch:	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/<new-default-branch-name>
+	

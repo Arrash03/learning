@@ -1,0 +1,4 @@
+compiline this ones and i got something:
+1. when size of external is 256 bit i got the best performance in std::valarray
+2. in number types there is no performance differences between std::vector and std::valarray
+

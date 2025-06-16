@@ -1,0 +1,6 @@
+1. change cpu frequencies to high for testing:
+	sudo cpupower frequency-set --governor performance
+
+2. to see which ports are in used:
+	sudo netstat -tuln
+

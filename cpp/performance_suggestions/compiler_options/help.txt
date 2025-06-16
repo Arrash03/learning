@@ -1,0 +1,4 @@
+1. -fno-exceptions and -fno-rtti: in cpp for avoiding error handler overhead in program
+2. -ftree-vectorize: enabling vectorize
+3. -fomit-frame-pointer: do not use frame pointer and do not create stack frame and use sp register that gives one more
+    register to cpu and it could use it that it may increase optimizations

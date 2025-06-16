@@ -1,0 +1,27 @@
+// delete word
+1. delete word
+	with all its spaces: diw
+	with space after it: dw
+2. delete a line to end: d$
+3. delete a line to begin: d^
+4. delete all lines between A and B: :A,Bd
+
+
+// tabs
+1. close all other panes: :only
+2. reopen last closed pane: :e #
+
+
+// indentation
+1. set tab spaces:	:set tabstop=<any-number-you-want>
+2. set number of spaces for any tab:	:set shiftwidth=4
+3. use spaces instead of tabs:	:set expandtab
+4. use indentation number from precious line:	:set autoindent
+5. more intelligent that previous option:	:set smartindent
+
+
+
+// ctrl base
+U (in visual mode): undo
+ctrl + r : redo
+

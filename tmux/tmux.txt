@@ -1,0 +1,3 @@
+typing in two panes simultaneously:
+	:setw synchronize-panes on
+
