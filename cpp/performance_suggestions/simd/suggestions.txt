@@ -1,0 +1,2 @@
+1. a matcher that will match input fields using simd operations
+2. string comparator
