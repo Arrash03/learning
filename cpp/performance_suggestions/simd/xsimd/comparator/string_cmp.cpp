@@ -6,8 +6,8 @@ static constexpr size_t container_size = 64;
 static constexpr size_t iterations = 1'000'000;
 
 using cstr = const char * const;
-using batch = xsimd::batch<uint64_t>;
-using batch_bool = xsimd::batch_bool<uint64_t>;
+using batch = xsimd::batch<uint64_t, xsimd::best_arch>;
+using batch_bool = xsimd::batch_bool<uint64_t, xsimd::best_arch>;
 
 static cstr src = "sdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkj";
 static cstr dst = "sdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkjsdfkljsfkdjskljfdlksjfkj";
@@ -20,20 +20,20 @@ static bool simd_cmp(cstr dst, cstr src, size_t size)
 {
     size_t i = 0;
 
-    while (size - (i * 64) > 64)
+    while (size - i > 64)
     {
-        batch va = batch::load_unaligned(src + i * 64);
-        batch vb = batch::load_unaligned(dst + i * 64);
+        batch va = batch::load_unaligned(src + i);
+        batch vb = batch::load_unaligned(dst + i);
         batch_bool vc = va != vb;
-        for(size_t i = 0; i < batch_bool::size; ++i)
+        for(size_t j = 0; j < batch_bool::size; ++j)
         {
-            if (vc.get(i))
+            if (vc.get(j))
                 return false;
         }
-        ++i;
+        i += 64;
     }
 
-    for(size_t j = i*64; j < size; ++j)
+    for(size_t j = i; j < size; ++j)
     {
         if (src[j] != dst[j])
             return false;
@@ -46,7 +46,8 @@ static void simd_function(benchmark::State& state)
 {
     for(auto _: state)
     {
-        simd_cmp(dst, src, size);
+        int a = simd_cmp(dst, src, size);
+        benchmark::DoNotOptimize(a);
     }
 }
 
