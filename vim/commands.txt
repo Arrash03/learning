@@ -25,3 +25,8 @@
 U (in visual mode): undo
 ctrl + r : redo
 
+
+// file info
+1. to see absolute path of a current file:	:pwd
+2. to see name of current file:		:file
+
