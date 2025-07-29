@@ -1,5 +1,5 @@
 1. debugging in multi process mode
-	firest enter this command:
+	first enter this command:
 		set follow-fork-mode child
 	then use this for see details about processes
 		info inferiors
