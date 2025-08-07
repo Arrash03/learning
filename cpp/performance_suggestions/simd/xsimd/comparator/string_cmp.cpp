@@ -4,8 +4,7 @@
 #include <benchmark/benchmark.h>
 #include <immintrin.h>  // AVX
 
-static constexpr size_t container_size = 64;
-static constexpr size_t iterations = 1'000;
+static constexpr size_t iterations = 100;
 static constexpr size_t size = 1ULL << 20;
 
 using cstr = uint64_t *;
@@ -51,8 +50,8 @@ std::uniform_int_distribution<uint64_t> distrib(-128, 127);
 
 static void a(uint64_t ** src, uint64_t** dst)
 {
-    *src = static_cast<uint64_t*>(std::aligned_alloc(64, size * sizeof(uint64_t)));
-    *dst = static_cast<uint64_t*>(std::aligned_alloc(64, size * sizeof(uint64_t)));
+    *src = static_cast<uint64_t*>(std::aligned_alloc(8, size * sizeof(uint64_t)));
+    *dst = static_cast<uint64_t*>(std::aligned_alloc(8, size * sizeof(uint64_t)));
     for(size_t i = 0; i < size; ++i)
     {
         (*src)[i] = distrib(gen);
