@@ -6,35 +6,44 @@
 
 static constexpr size_t container_size = 64;
 static constexpr size_t iterations = 1'000;
-static constexpr size_t size = 1ULL << 10;
+static constexpr size_t size = 1ULL << 20;
 
 using cstr = uint64_t *;
 using batch = xsimd::batch<uint64_t, xsimd::best_arch>;
 using batch_bool = xsimd::batch_bool<uint64_t, xsimd::best_arch>;
 
-#define quad_loop(start, step, end, ...)\
+#define work(i)\
+do {\
+    __m512i va = _mm512_loadu_si512((const void*)(a + (i)));\
+    __m512i vb = _mm512_loadu_si512((const void*)(b + (i)));\
+    __mmask64 cmp = _mm512_cmpeq_epi8_mask(va, vb);\
+    if (cmp != 0xFFFFFFFFFFFFFFFFULL)\
+    {\
+        return false;\
+    }\
+} while (0);
+
+#define quad_loop(start, step, end, tmp)\
     for (; (start) + 4 * (step) - 1 < end; (start) += 4 * (step)) {\
-        __VA_ARGS__\
-        __VA_ARGS__\
-        __VA_ARGS__\
-        __VA_ARGS__\
+        work((start))\
+        work((start) + (step))\
+        work((start) + 2 * (step))\
+        work((start) + 3 * (step))\
     }
 
 #define square_loop(start, step, end, ...)\
     for (; (start) + 2 * (step) - 1 < end; (start) += 2 * (step)) {\
-        __VA_ARGS__\
-        __VA_ARGS__\
+        work((start))\
+        work((start) + (step))\
     }
 
-#define unrolling_loop(start, step, end, ...)\
-    quad_loop(start, step, end, __VA_ARGS__)\
-    square_loop(start, step, end, __VA_ARGS__)\
+#define unrolling_loop(start, step, end)\
+    quad_loop(start, step, end, tmp)\
+    square_loop(start, step, end, work(i))\
     if ((start) + (step) - 1 < (end)) {\
-        __VA_ARGS__\
+        work((start))\
         (start) += (step);\
     }
-
-
 
 std::random_device rd;
 std::mt19937 gen(rd());
@@ -147,16 +156,7 @@ static void normal_function(benchmark::State& state)
 bool avx512_buffer_equal(const uint64_t* a, const uint64_t* b, size_t size) {
     size_t i = 0;
 
-    unrolling_loop(i, 8, size,
-    {
-        __m512i va = _mm512_loadu_si512((const void*)(a + i));
-        __m512i vb = _mm512_loadu_si512((const void*)(b + i));
-        __mmask64 cmp = _mm512_cmpeq_epi8_mask(va, vb);
-        if (cmp != 0xFFFFFFFFFFFFFFFFULL)
-        {
-            return false;
-        }
-    });
+    unrolling_loop(i, 8, size);
 
     if (i + 3 < size)
     {
