@@ -1,0 +1,8 @@
+*.exe
+*.data
+*.svg
+*.folded
+*.stacks
+*.old
+*.swp
+a.out
