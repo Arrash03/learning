@@ -1,0 +1,13 @@
+Running ./output
+Run on (8 X 4000 MHz CPU s)
+CPU Caches:
+  L1 Data 48 KiB (x4)
+  L1 Instruction 32 KiB (x4)
+  L2 Unified 1280 KiB (x4)
+  L3 Unified 8192 KiB (x1)
+Load Average: 0.58, 0.50, 0.67
+-----------------------------------------------------------------------------------------------
+Benchmark                                     Time             CPU   Iterations UserCounters...
+-----------------------------------------------------------------------------------------------
+avx512_simd_function/iterations:1000        122 ns          120 ns         1000 CACHE-MISSES=0.219 CYCLES=447.058 INSTRUCTIONS=775.323
+normal_function/iterations:1000             188 ns          188 ns         1000 CACHE-MISSES=0.125 CYCLES=749.085 INSTRUCTIONS=1.79932k
