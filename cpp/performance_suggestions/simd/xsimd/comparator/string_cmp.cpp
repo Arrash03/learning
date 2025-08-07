@@ -11,18 +11,7 @@ using cstr = uint64_t *;
 using batch = xsimd::batch<uint64_t, xsimd::best_arch>;
 using batch_bool = xsimd::batch_bool<uint64_t, xsimd::best_arch>;
 
-#define work(i)\
-do {\
-    __m512i va = _mm512_loadu_si512((const void*)(a + (i)));\
-    __m512i vb = _mm512_loadu_si512((const void*)(b + (i)));\
-    __mmask64 cmp = _mm512_cmpeq_epi8_mask(va, vb);\
-    if (cmp != 0xFFFFFFFFFFFFFFFFULL)\
-    {\
-        return false;\
-    }\
-} while (0);
-
-#define quad_loop(start, step, end, tmp)\
+#define quad_loop(start, step, end)\
     for (; (start) + 4 * (step) - 1 < end; (start) += 4 * (step)) {\
         work((start))\
         work((start) + (step))\
@@ -30,15 +19,15 @@ do {\
         work((start) + 3 * (step))\
     }
 
-#define square_loop(start, step, end, ...)\
+#define square_loop(start, step, end)\
     for (; (start) + 2 * (step) - 1 < end; (start) += 2 * (step)) {\
         work((start))\
         work((start) + (step))\
     }
 
 #define unrolling_loop(start, step, end)\
-    quad_loop(start, step, end, tmp)\
-    square_loop(start, step, end, work(i))\
+    quad_loop((start), (step), (end))\
+    square_loop((start), (step), (end))\
     if ((start) + (step) - 1 < (end)) {\
         work((start))\
         (start) += (step);\
@@ -155,7 +144,20 @@ static void normal_function(benchmark::State& state)
 bool avx512_buffer_equal(const uint64_t* a, const uint64_t* b, size_t size) {
     size_t i = 0;
 
+    #define work(i)\
+        do {\
+            __m512i va = _mm512_loadu_si512((const void*)(a + (i)));\
+            __m512i vb = _mm512_loadu_si512((const void*)(b + (i)));\
+            __mmask64 cmp = _mm512_cmpeq_epi8_mask(va, vb);\
+            if (cmp != 0xFFFFFFFFFFFFFFFFULL)\
+            {\
+                return false;\
+            }\
+        } while (0);
+
     unrolling_loop(i, 8, size);
+
+    #undef work
 
     if (i + 3 < size)
     {
