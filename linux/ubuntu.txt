@@ -1,0 +1,3 @@
+1. set default version of a package when there are different versions are available in system
+	update-alternatives --install /usr/bin/<binary> <binary> /usr/bin/<binary-with-version> <priority like 100>
+
