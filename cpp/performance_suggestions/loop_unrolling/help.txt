@@ -1,0 +1,29 @@
+loops have this overhead:
+
+Incrementing a counter
+Checking a loop condition
+Jumping back to the start of the loop
+
+so we can reduce it in this way:
+
+for (int i = 0; i < 8; i++) {
+    process(array[i]);
+}
+
+
+to
+
+for (int i = 0; i < 8; i += 4) {
+    process(array[i]);
+    process(array[i + 1]);
+    process(array[i + 2]);
+    process(array[i + 3]);
+}
+
+drawbacks:
+Increased Code Size: Unrolling a loop increases the size of the binary, which can lead to higher memory usage and potential cache misses.
+Complexity in Control Flow: If the loop contains complex branching, unrolling can complicate the control flow, making it harder to optimize.
+Register Pressure: More variables may need to be stored in registers, which can lead to register exhaustion in some cases.
+
+
+
