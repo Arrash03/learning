@@ -1,3 +1,16 @@
-1. set default version of a package when there are different versions are available in system
-	update-alternatives --install /usr/bin/<binary> <binary> /usr/bin/<binary-with-version> <priority like 100>
+// package manager
+1. to see all the contents in a deb package
+	dpkg -c <deb-file>
 
+2. to see all the dpendencies of a deb package
+	dpkg -S <deb-file>
+   if you want just see deps of a package that you do not have it but exists in apt repo:
+	apt-cache depends <package-name>
+   note: apt-rdepends is usefull too
+
+3. to just downlad deb file of a package withou installing it in apt:
+	apt downlad <package>
+
+// default apps
+4. set default version of a package when there are different versions are available in system
+	update-alternatives --install /usr/bin/<binary> <binary> /usr/bin/<binary-with-version> <priority like 100>

@@ -1,0 +1,3 @@
+1. -fPIC
+	used for all the libraries that want to link to a shared library. PIC is a type of code that could load at any point of memory and it is useful for shared libraries that could load at any point of memory
+
