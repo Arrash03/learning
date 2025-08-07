@@ -1,0 +1,4 @@
+drawbacks:
+On many Intel (pre‑Ice Lake) and even some AMD CPUs, executing wide AVX‑512 instructions causes the CPU to downclock for power reasons.
+This can reduce throughput by ~10–15% compared to using AVX2 or scalar code. The number of cores that run simd operations
+are matter too. More cores less cpu clock.
