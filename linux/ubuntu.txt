@@ -1,3 +1,4 @@
+// package manager
 1. to see all the contents in a deb package
 	dpkg -c <deb-file>
 
@@ -12,3 +13,6 @@
 3. to just downlad deb file of a package withou installing it in apt:
 	apt downlad <package>
 
+// default apps
+4. set default version of a package when there are different versions are available in system
+	update-alternatives --install /usr/bin/<binary> <binary> /usr/bin/<binary-with-version> <priority like 100>

@@ -1,0 +1,2 @@
+-fdiagnostics-generate-patch: gives a patch that you could apply on your code for for fixing
+-fdiagnostics-show-template-tree

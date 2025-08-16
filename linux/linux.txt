@@ -10,3 +10,13 @@
 	3.3. format it by any type you want(right now i prefer F32): sudo mkfs.vfat -F32 -I <dev>
 	3.3. optionally you could write all of the bytes in usb by zero using this command: sudo dd if=/dev/zero of=/dev/<usb> bs=<size-of-usb> status=progress
 
+4. sync time
+	4.1. enable it for doing automatically:	sudo systemctl restart systemd-timesyncd
+	you can sync it manually: sudo systemctl restart systemd-timesyncd
+
+5. set time manually
+	5.1. disable automatic synchronization: sudo timedatectl set-ntp false
+	5.2. sudo timedatectl set-time 'YYYY-MM-DD HH:MM:SS'
+	5.3. see the status: timedatectl
+
+

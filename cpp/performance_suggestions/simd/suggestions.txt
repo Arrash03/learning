@@ -1,0 +1,4 @@
+1. a matcher that will match input fields using simd operations
+2. string comparator: done
+3. benchmark of different registers
+4. different alignemnts

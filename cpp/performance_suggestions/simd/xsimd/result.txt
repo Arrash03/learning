@@ -1,0 +1,2 @@
+xsimd is just fucking shitttt. it add so extra overhead to your code and if you care about performance you should avoid 
+using it and for portabiliy i have a suggestion for you; do it your self.
