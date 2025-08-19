@@ -4,6 +4,8 @@
 
 2. to see all the dpendencies of a deb package
 	dpkg -S <deb-file>
+   for installed packages
+	apt-cache depends <package-name>
    if you want just see deps of a package that you do not have it but exists in apt repo:
 	apt-cache depends <package-name>
    note: apt-rdepends is usefull too
