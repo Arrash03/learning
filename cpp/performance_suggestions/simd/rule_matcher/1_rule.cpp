@@ -7,7 +7,7 @@
 #include <immintrin.h>
 #include <sys/types.h>
 
-static constexpr size_t iterations = 1'000;
+static constexpr size_t iterations = 1'000'00;
 static constexpr size_t rows = 256;
 static constexpr size_t columns = 1500;
 
@@ -115,25 +115,7 @@ bool match_simd_array_normal(const td_array a, size_t size, const volatile Rule&
 
     #undef work
 
-    if (i + 3 < size)
-    {
-        __m256i va = _mm256_set1_epi64x(rule.vlaue);
-        __m256i vb = _mm256_set_epi64x(a[i][rule.offset], a[i + 1][rule.offset], a[i + 2][rule.offset], a[i + 3][rule.offset]);
-        __mmask64 cmp = _mm256_cmpeq_epi8_mask(va, vb);
-        benchmark::DoNotOptimize(cmp);
-        i += 4;
-    }
-
-    if (i + 1 < size)
-    {
-        __m128i va = _mm_set1_epi64x(rule.vlaue);
-        __m128i vb = _mm_set_epi64x(a[i][rule.offset], a[i + 1][rule.offset]);
-        __mmask8 cmp = _mm_cmpeq_epi8_mask(va, vb);
-        benchmark::DoNotOptimize(cmp);
-        i += 2;
-    }
-    
-    if (i < size)
+    while (i < size)
     {
         if (a[i][rule.offset] != rule.vlaue) return false;
         i += 1;
