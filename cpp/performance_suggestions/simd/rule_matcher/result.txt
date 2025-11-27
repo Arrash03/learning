@@ -1,13 +1,15 @@
+root@fanaa:/home/fanaa/projects/learning/cpp/performance_suggestions/simd/rule_matcher# ./output --benchmark_perf_counters=cycles,instructions,branches,branch-misses
+2025-11-27T17:08:20+03:30
 Running ./output
-Run on (8 X 4000 MHz CPU s)
+Run on (8 X 3030.57 MHz CPU s)
 CPU Caches:
   L1 Data 48 KiB (x4)
   L1 Instruction 32 KiB (x4)
   L2 Unified 1280 KiB (x4)
   L3 Unified 8192 KiB (x1)
-Load Average: 0.58, 0.50, 0.67
------------------------------------------------------------------------------------------------
-Benchmark                                     Time             CPU   Iterations UserCounters...
------------------------------------------------------------------------------------------------
-avx512_simd_function/iterations:1000        122 ns          120 ns         1000 CACHE-MISSES=0.219 CYCLES=447.058 INSTRUCTIONS=775.323
-normal_function/iterations:1000             188 ns          188 ns         1000 CACHE-MISSES=0.125 CYCLES=749.085 INSTRUCTIONS=1.79932k
+Load Average: 0.19, 0.27, 0.28
+-------------------------------------------------------------------------------------------------
+Benchmark                                       Time             CPU   Iterations UserCounters...
+-------------------------------------------------------------------------------------------------
+avx512_simd_function/iterations:100000        105 ns          105 ns       100000 branch-misses=1.00018 branches=34.0008 cycles=436.195 instructions=872.003
+normal_function/iterations:100000             142 ns          142 ns       100000 branch-misses=1.00024 branches=258.001 cycles=598.138 instructions=1.799k
