@@ -1,0 +1,26 @@
+root@fanaa:/home/fanaa/projects/learning/cpp/performance_suggestions/simd/difference_simd_registers# taskset -c 6 ./output --benchmark_perf_counters=cycles,instructions,branches
+,branch-misses
+2025-11-27T18:23:49+03:30
+Running ./output
+Run on (8 X 4016.38 MHz CPU s)
+CPU Caches:
+  L1 Data 48 KiB (x4)
+  L1 Instruction 32 KiB (x4)
+  L2 Unified 1280 KiB (x4)
+  L3 Unified 8192 KiB (x1)
+Load Average: 0.40, 0.50, 0.42
+----------------------------------------------------------------------------------------------
+Benchmark                                    Time             CPU   Iterations UserCounters...
+----------------------------------------------------------------------------------------------
+avx_512/1024/iterations:10000             67.6 ns         67.5 ns        10000 branch-misses=1.0097 branches=132.007 cycles=267.761 instructions=783.032
+avx_512/32768/iterations:10000            6284 ns         6279 ns        10000 branch-misses=1.0027 branches=4.10002k cycles=25.9309k instructions=24.591k
+avx_512/1048576/iterations:10000       1094027 ns      1093746 ns        10000 branch-misses=1.0023 branches=131.077k cycles=4.64897M instructions=786.448k
+avx_256/1024/iterations:10000              124 ns          124 ns        10000 branch-misses=1.003 branches=260.007 cycles=530.216 instructions=1.55103k
+avx_256/32768/iterations:10000            5630 ns         5629 ns        10000 branch-misses=1.0017 branches=8.19602k cycles=23.7713k instructions=49.167k
+avx_256/1048576/iterations:10000       1076731 ns      1076414 ns        10000 branch-misses=1.0038 branches=262.149k cycles=4.68035M instructions=1.57288M
+avx_128/1024/iterations:10000              240 ns          240 ns        10000 branch-misses=1.0022 branches=516.007 cycles=1.03989k instructions=3.08703k
+avx_128/32768/iterations:10000            8514 ns         8510 ns        10000 branch-misses=1.0025 branches=16.388k cycles=35.8429k instructions=98.319k
+avx_128/1048576/iterations:10000       1074746 ns      1074468 ns        10000 branch-misses=1.0048 branches=524.293k cycles=4.67348M instructions=3.14574M
+normal_sum/1024/iterations:10000          65.3 ns         65.3 ns        10000 branch-misses=1.0103 branches=135.007 cycles=265.406 instructions=792.033
+normal_sum/32768/iterations:10000         6267 ns         6258 ns        10000 branch-misses=1.0028 branches=4.10302k cycles=25.8809k instructions=24.6k
+normal_sum/1048576/iterations:10000    1094591 ns      1094310 ns        10000 branch-misses=1.0032 branches=131.08k cycles=4.6532M instructions=786.457k
