@@ -1,6 +1,5 @@
 #include <immintrin.h>  // AVX
 #include <benchmark/benchmark.h>
-#include <iostream>
 #include <random>
 
 static size_t container_size = 1'024;
