@@ -19,4 +19,7 @@
 	5.2. sudo timedatectl set-time 'YYYY-MM-DD HH:MM:SS'
 	5.3. see the status: timedatectl
 
+6. Change view of process to kernel: setarch
+	5.1. change what 'uname -m' will return for process(setarch i386 <command>)
+	5.2. could disable Addres Space Randomization(ASLR) for that process(setarch -R <command>)
 
