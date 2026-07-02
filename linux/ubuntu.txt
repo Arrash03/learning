@@ -16,3 +16,37 @@
 // default apps
 4. set default version of a package when there are different versions are available in system
 	update-alternatives --install /usr/bin/<binary> <binary> /usr/bin/<binary-with-version> <priority like 100>
+
+
+
+// network
+network managers likes netpaln, systemd-networkd and NetworkManager are high level configuration assistants that
+just translate commands to the raw instruction that kernel understand. So an ubunut does not need any of them for
+its networking. The simplest configuration could be like this
+In path '/etc/network/interfaces' could be interface details like this
+```
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+        address 155.117.13.84
+        netmask 255.255.255.0
+        gateway 155.117.13.1
+```
+and for its dns configuration it could have just a simple resolve.conf file like this:
+```
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+```
+
+note: if there was a local nameserver like 127.0.0.53 it means that there is a service in system that will resolve
+dns queries.
+
+1. resolvectl
+	resolvectl status: for seeing current nameserver for each of interfaces and active ones
+	resolvectl statistcis: for seeing cached dns records details in system
+2. nmcli: for seeing connection details in whole system and interfaces
+
